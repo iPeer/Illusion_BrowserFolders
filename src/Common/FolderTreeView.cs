@@ -21,6 +21,8 @@ namespace BrowserFolders
 
         public static bool EnableFilesystemWatcher { get; set; } = true;
 
+        public static bool IgnoreDotFolders { get; set; } = true;
+
         private GameObject XuaObject
         {
             get
@@ -306,6 +308,11 @@ namespace BrowserFolders
         {
             var dirFullName = dir.FullName;
             var subDirs = dir.SubDirs;
+
+            if (IgnoreDotFolders)
+            {
+                subDirs.RemoveAll(a => a.Name.StartsWith("."));
+            }
 
             if (indent == 0 && subDirs.Count == 0)
             {
